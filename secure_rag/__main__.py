@@ -1,7 +1,7 @@
 """Command line: ask a question as a user, through a pipeline.
 
-    python -m secure_rag ask --user intern-ana --pipeline naive "What is the CEO's salary?"
-    python -m secure_rag compare --user intern-ana "How much does the chief executive take home?"
+    python -m secure_rag ask --user eng-dimitris --pipeline naive "Is my team affected by the restructuring?"
+    python -m secure_rag compare --user eng-dimitris "Does the Developer Tools team merge into Platform?"
 """
 
 from __future__ import annotations

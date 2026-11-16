@@ -1,8 +1,8 @@
 """Groundedness and accuracy evaluation.
 
 Each gold item names the user who asks. The expected answer depends on who
-asks: for the intern, "I don't know" is the correct answer to a question about
-executive pay. An eval set without a user column cannot measure that.
+asks: for an engineer, "I don't know" is the correct answer to a question about
+the restructuring plan. An eval set without a user column cannot measure that.
 
 Metrics, kept separate on purpose:
 

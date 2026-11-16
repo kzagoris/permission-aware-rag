@@ -4,4 +4,4 @@ title: Untitled Draft
 allowed_groups:
 sensitivity: unknown
 ---
-Draft notes on the reorganization of the sales department. Reference CANARY-NA-7777.
+Draft notes on the office move to the new building in Marousi. Reference CANARY-NA-7777.

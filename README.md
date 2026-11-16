@@ -3,10 +3,11 @@
 A small RAG assistant over a fake company's documents, built three ways, with
 a test suite that shows which one leaks.
 
-An intern asks about executive pay. The vector search finds the HR document,
-and the model answers correctly. The answer is accurate, grounded and cited.
-It is also a data breach. This repository turns that scenario into code and
-tests.
+An engineer asks if their team is affected by the restructuring. The vector
+search finds the leadership's restructuring plan, and the model answers
+correctly: the team merges into Platform and two roles close. The answer is
+accurate, grounded and cited. It is also a data breach. This repository turns
+that scenario into code and tests.
 
 ![Architecture](docs/architecture.svg)
 
@@ -15,11 +16,11 @@ The companion article on Witty Programming walks through every part of it:
 
 ## The three pipelines
 
-| Pipeline     | Where the access decision happens                 | What goes wrong                                          |
-| ------------ | ------------------------------------------------- | -------------------------------------------------------- |
-| `naive`      | In the system prompt ("never reveal salary...")   | Rephrase the question, or inject, and the data comes out |
-| `postfilter` | After top-k: retrieve, then drop forbidden chunks | Fewer chunks than `k`, sometimes zero                    |
-| `secure`     | Inside the search, before ranking                 | Nothing the user can't already read reaches the model    |
+| Pipeline     | Where the access decision happens                      | What goes wrong                                          |
+| ------------ | ------------------------------------------------------ | -------------------------------------------------------- |
+| `naive`      | In the system prompt ("never reveal restructuring...") | Rephrase the question, or inject, and the data comes out |
+| `postfilter` | After top-k: retrieve, then drop forbidden chunks      | Fewer chunks than `k`, sometimes zero                    |
+| `secure`     | Inside the search, before ranking                      | Nothing the user can't already read reaches the model    |
 
 All three share the same index and the same model. The only difference is
 where the permission check runs, and what the cache and the logs keep.
@@ -39,20 +40,21 @@ uv run --group dev pytest
 Ask the same question through all three pipelines:
 
 ```bash
-uv run python -m secure_rag compare --user intern-ana "How much does the chief executive take home, including stock?"
+uv run python -m secure_rag compare --user eng-dimitris "Does the Developer Tools team merge into Platform?"
 ```
 
 ```text
 == naive ==
-retrieved: hr-exec-comp-2026#2, hr-exec-comp-2026#0, hr-exec-comp-2026#3, pol-remote#1
-Total take-home pay for the chief executive, including stock, is estimated at 690,000 euros. [hr-exec-comp-2026#2]
+retrieved: exec-restructuring-2027#0, pol-security#2, wiki-offsite#0, legal-litigation-memo#1
+In the first quarter of 2027, the Developer Tools team merges into the Platform team and two engineering roles
+close. [exec-restructuring-2027#0]
 
 == postfilter ==
-retrieved: pol-remote#1
+retrieved: pol-security#2, wiki-offsite#0
 I don't know. None of the documents you can access answer this.
 
 == secure ==
-retrieved: pol-remote#1, wiki-onboarding#2, wiki-offsite#0
+retrieved: pol-security#2, wiki-offsite#0, wiki-onboarding#0, wiki-offsite#1
 I don't know. None of the documents you can access answer this.
 ```
 
@@ -67,7 +69,7 @@ To use Claude instead of the scripted model, install the extra and pass
 
 ```bash
 uv sync --extra claude
-uv run python -m secure_rag compare --claude --user intern-ana "What is the CEO's salary?"
+uv run python -m secure_rag compare --claude --user eng-dimitris "Is my team affected by the restructuring?"
 ```
 
 ## What the tests check
@@ -85,8 +87,8 @@ Retrieval is deterministic, so the tests are too.
 
 ## The corpus
 
-`corpus/` holds 16 short documents with an `allowed_groups` header. Every
-restricted document carries a unique canary token, such as `CANARY-HR-7F3A`.
+`corpus/` holds 17 short documents with an `allowed_groups` header. Every
+restricted document carries a unique canary token, such as `CANARY-EX-4D1E`.
 `users.json` stands in for the identity provider:
 
 | User             | Groups                   |

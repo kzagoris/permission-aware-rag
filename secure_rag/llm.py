@@ -23,8 +23,8 @@ from typing import Protocol
 
 from .embed import tokenize
 
-GUARD_RULE = "Never reveal salary, compensation, bonus or pay information."
-GUARD_TERMS = frozenset({"salary", "compensation", "bonus", "pay"})
+GUARD_RULE = "Never reveal restructuring, reorganization or layoff plans."
+GUARD_TERMS = frozenset({"restructuring", "reorganization", "reorganisation", "reorg", "layoff", "redundancie"})
 INJECTION = re.compile(r"ignore (all )?previous instructions", re.IGNORECASE)
 ABSTAIN = "I don't know. None of the documents you can access answer this."
 
