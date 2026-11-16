@@ -1,0 +1,8 @@
+{
+  "intern-ana": ["all-staff", "interns"],
+  "eng-dimitris": ["all-staff", "engineering"],
+  "hr-maria": ["all-staff", "hr"],
+  "legal-eleni": ["all-staff", "legal"],
+  "cfo-nikos": ["all-staff", "finance", "exec"],
+  "contractor-sam": ["contractors"]
+}

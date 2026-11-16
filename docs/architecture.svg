@@ -1,0 +1,97 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 600" font-family="Inter, Segoe UI, Helvetica, Arial, sans-serif">
+  <style>
+    .bg { fill: #f4f1f2; }
+    .zone { fill: none; stroke: #cfc8cc; stroke-width: 1.5; stroke-dasharray: 6 5; }
+    .boundary { fill: #2f7d5b; fill-opacity: 0.05; stroke: #2f7d5b; stroke-width: 2.5; stroke-dasharray: 10 6; }
+    .untrusted { fill: #b83a2e; fill-opacity: 0.05; stroke: #b83a2e; stroke-width: 2; stroke-dasharray: 10 6; }
+    .node { fill: #ffffff; stroke: #cfc8cc; stroke-width: 1.5; }
+    .key { fill: #ffffff; stroke: #2f7d5b; stroke-width: 2.5; }
+    .llm { fill: #ffffff; stroke: #b83a2e; stroke-width: 2; }
+    .side { fill: #ffffff; stroke: #a7465d; stroke-width: 1.5; }
+    .t { fill: #1c131d; font-size: 15px; font-weight: 600; text-anchor: middle; }
+    .s { fill: #6b6470; font-size: 12px; text-anchor: middle; }
+    .zl { fill: #6b6470; font-size: 12px; letter-spacing: 0.06em; text-transform: uppercase; }
+    .gl { fill: #2f7d5b; font-size: 13px; font-weight: 700; letter-spacing: 0.04em; }
+    .rl { fill: #b83a2e; font-size: 13px; font-weight: 700; letter-spacing: 0.04em; }
+    .e { fill: none; stroke: #6b6470; stroke-width: 2; marker-end: url(#a); }
+    .ed { fill: none; stroke: #a7465d; stroke-width: 1.5; stroke-dasharray: 5 4; marker-end: url(#ap); }
+    .n { fill: #6b6470; font-size: 11.5px; }
+    .title { fill: #1c131d; font-size: 20px; font-weight: 700; }
+  </style>
+  <defs>
+    <marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#6b6470"/></marker>
+    <marker id="ap" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#a7465d"/></marker>
+  </defs>
+  <rect class="bg" width="1000" height="600" rx="16"/>
+  <text class="title" x="32" y="44">Permission-aware RAG: where each decision is made</text>
+
+  <!-- ingestion lane -->
+  <rect class="zone" x="24" y="68" width="952" height="118" rx="12"/>
+  <text class="zl" x="40" y="90">Ingestion (offline)</text>
+  <rect class="node" x="48" y="104" width="180" height="62" rx="10"/>
+  <text class="t" x="138" y="131">Source systems</text>
+  <text class="s" x="138" y="151">SharePoint, Drive, wiki</text>
+  <rect class="key" x="288" y="104" width="190" height="62" rx="10"/>
+  <text class="t" x="383" y="131">ACL sync + scan</text>
+  <text class="s" x="383" y="151">groups, sensitivity, quarantine</text>
+  <rect class="node" x="538" y="104" width="190" height="62" rx="10"/>
+  <text class="t" x="633" y="131">Chunk + embed</text>
+  <text class="s" x="633" y="151">every chunk carries its ACL</text>
+  <rect class="node" x="788" y="104" width="164" height="62" rx="10"/>
+  <text class="t" x="870" y="131">Vector index</text>
+  <text class="s" x="870" y="151">vectors + metadata</text>
+  <path class="e" d="M228,135 L286,135"/>
+  <path class="e" d="M478,135 L536,135"/>
+  <path class="e" d="M728,135 L786,135"/>
+
+  <!-- request path -->
+  <rect class="boundary" x="24" y="210" width="606" height="232" rx="14"/>
+  <text class="gl" x="40" y="234">SECURITY BOUNDARY: DETERMINISTIC CODE</text>
+  <rect class="untrusted" x="650" y="210" width="326" height="232" rx="14"/>
+  <text class="rl" x="666" y="234">UNTRUSTED: THE MODEL</text>
+
+  <rect class="node" x="48" y="262" width="150" height="70" rx="10"/>
+  <text class="t" x="123" y="290">Employee</text>
+  <text class="s" x="123" y="310">signed-in session</text>
+  <rect class="key" x="240" y="262" width="160" height="70" rx="10"/>
+  <text class="t" x="320" y="290">Identity</text>
+  <text class="s" x="320" y="310">groups from the IdP,</text>
+  <text class="s" x="320" y="324">never from the client</text>
+  <rect class="key" x="440" y="262" width="170" height="70" rx="10"/>
+  <text class="t" x="525" y="290">Retriever</text>
+  <text class="s" x="525" y="310">ACL filter inside the</text>
+  <text class="s" x="525" y="324">search, then top-k</text>
+
+  <rect class="llm" x="676" y="262" width="130" height="70" rx="10"/>
+  <text class="t" x="741" y="290">LLM</text>
+  <text class="s" x="741" y="310">sees only what</text>
+  <text class="s" x="741" y="324">the user may see</text>
+  <rect class="node" x="826" y="262" width="130" height="70" rx="10"/>
+  <text class="t" x="891" y="290">Output checks</text>
+  <text class="s" x="891" y="310">citations, canaries,</text>
+  <text class="s" x="891" y="324">no external links</text>
+
+  <path class="e" d="M198,297 L238,297"/>
+  <path class="e" d="M400,297 L438,297"/>
+  <path class="e" d="M610,297 L674,297"/>
+  <path class="e" d="M806,297 L824,297"/>
+  <path class="e" d="M870,166 L870,198 L565,198 L565,260"/>
+
+  <text class="n" x="48" y="372">The answer to "may this user see this chunk?" is computed before</text>
+  <text class="n" x="48" y="390">the model exists in the request. A prompt cannot change it.</text>
+  <text class="n" x="676" y="372">A successful prompt injection reaches only</text>
+  <text class="n" x="676" y="390">the user's own documents.</text>
+
+  <!-- side channels -->
+  <rect class="zone" x="24" y="462" width="952" height="114" rx="12"/>
+  <text class="zl" x="40" y="484">Side channels that leak if you forget them</text>
+  <rect class="side" x="48" y="498" width="280" height="62" rx="10"/>
+  <text class="t" x="188" y="524">Answer cache</text>
+  <text class="s" x="188" y="544">keyed by permission fingerprint</text>
+  <rect class="side" x="360" y="498" width="280" height="62" rx="10"/>
+  <text class="t" x="500" y="524">Traces and logs</text>
+  <text class="s" x="500" y="544">chunk ids and hashes, not text</text>
+  <rect class="side" x="672" y="498" width="280" height="62" rx="10"/>
+  <text class="t" x="812" y="524">Eval + access test suite</text>
+  <text class="s" x="812" y="544">persona matrix, canaries, in CI</text>
+</svg>
